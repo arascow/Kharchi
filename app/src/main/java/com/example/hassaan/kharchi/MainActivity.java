@@ -1,8 +1,14 @@
 package com.example.hassaan.kharchi;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +21,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+
+import com.example.hassaan.kharchi.Fragment.ExpenseGetFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,37 +38,55 @@ public class MainActivity extends AppCompatActivity
         final ProgressBar pb=(ProgressBar) findViewById(R.id.progressBar);
         int a=pb.getProgress();
 
-        final EditText et=(EditText) findViewById(R.id.et);
-        final EditText et1=(EditText) findViewById(R.id.et2);
-
-        Button addButton=(Button) findViewById(R.id.button);
-        Button subButton=(Button) findViewById(R.id.button2);
+        Button addButton=(Button) findViewById(R.id.BtnAdd);
+        Button subButton=(Button) findViewById(R.id.BtnSub);
 
         subButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String input1=et1.getText().toString();
-                pb.setProgress(Integer.parseInt(input1));
+
             }
         });
         addButton.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
-                String input=et.getText().toString();
-                pb.setMax(Integer.parseInt(input));
+
+                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
 
             }
         });
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+                builder.setView(inflater.inflate(R.layout.expense_dialog, null));
+                EditText editText = (EditText) findViewById(R.id.ED_EditText);
+                builder.setMessage("Enter Expense").setTitle("Enter Expense here");
+
+                builder.setPositiveButton("Enter", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+
+                    }
+                });
+                builder.setNegativeButton("Exit", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        // User cancelled the dialog
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 

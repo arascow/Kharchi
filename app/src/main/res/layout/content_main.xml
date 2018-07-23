@@ -8,14 +8,6 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-
-    <EditText
-        android:id="@+id/et2"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/button2"
-        android:layout_below="@+id/progressBar" />
-
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -29,7 +21,7 @@
          />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/BtnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -38,7 +30,7 @@
         android:text="Add" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/BtnSub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -47,10 +39,23 @@
         android:text="Sub"
         />
 
-    <EditText
-        android:id="@+id/et"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/button"
-        android:layout_below="@+id/progressBar" />
+    <RelativeLayout
+        android:id="@+id/fragmentlayout"
+        android:layout_width="288dp"
+        android:layout_height="167dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="90dp">
+
+        <fragment
+            android:id="@+id/expenseFragment"
+            android:name="com.example.hassaan.kharchi.Fragment.ExpenseGetFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            tools:layout="@layout/fragment_expense_get" />
+    </RelativeLayout>
+
+
+
 </RelativeLayout>
