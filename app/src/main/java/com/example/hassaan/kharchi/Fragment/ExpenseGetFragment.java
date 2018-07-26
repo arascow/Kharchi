@@ -46,7 +46,6 @@ private Context context;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater inflater = getLayoutInflater();
                 builder.setView(inflater.inflate(R.layout.expense_dialog, null));
-                EditText editText = (EditText) view.findViewById(R.id.ED_EditText);
                 builder.setMessage("Enter Expense").setTitle("Enter Expense here");
 
                 builder.setPositiveButton("Enter", new DialogInterface.OnClickListener()

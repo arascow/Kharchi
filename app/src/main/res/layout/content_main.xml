@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,51 +11,57 @@
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:scaleY="5"
-        android:layout_width="match_parent"
+        android:layout_width="327dp"
         android:layout_height="59dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
         android:max="100"
-         />
+        android:progressBackgroundTint="#FF4000"
+        android:backgroundTintMode="src_atop"
+        android:progressTint="#00FF00"
+        android:scaleY="5" />
 
-    <Button
-        android:id="@+id/BtnAdd"
+    <!--<Button-->
+        <!--android:id="@+id/BtnAdd"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginStart="60dp"-->
+        <!--android:layout_marginTop="175dp"-->
+        <!--android:text="Add" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/BtnSub"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_marginEnd="60dp"-->
+        <!--android:layout_marginTop="175dp"-->
+        <!--android:text="Sub" />-->
+
+    <TextView
+        android:id="@+id/Income"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="175dp"
-        android:text="Add" />
+        android:layout_marginStart="111dp"
+        android:layout_marginTop="111dp"
+        android:background="#FFFFFF"
+        android:padding="10dp" />
 
-    <Button
-        android:id="@+id/BtnSub"
+    <TextView
+        android:id="@+id/Expense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="175dp"
-        android:layout_marginEnd="60dp"
-        android:text="Sub"
-        />
-
-    <RelativeLayout
-        android:id="@+id/fragmentlayout"
-        android:layout_width="288dp"
-        android:layout_height="167dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="90dp">
-
-        <fragment
-            android:id="@+id/expenseFragment"
-            android:name="com.example.hassaan.kharchi.Fragment.ExpenseGetFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            tools:layout="@layout/fragment_expense_get" />
-    </RelativeLayout>
-
+        android:layout_alignTop="@+id/Income"
+        android:layout_marginEnd="139dp"
+        android:background="#FFFFFF"
+        android:padding="10dp" />
 
 
 </RelativeLayout>
