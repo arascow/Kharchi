@@ -6,21 +6,35 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.hassaan.kharchi.Adapters.RecentExpenseAdapter;
+import com.example.hassaan.kharchi.Data.Repo.ExpenseRepo;
+import com.example.hassaan.kharchi.Data.Repo.ExpenseTypeRepo;
 import com.example.hassaan.kharchi.MainActivity;
+import com.example.hassaan.kharchi.Models.Expense;
+import com.example.hassaan.kharchi.Models.Expense_Type;
 import com.example.hassaan.kharchi.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ExpenseGetFragment extends Fragment {
+    private RecyclerView recyclerView;
+    private Context context;
 
-private Context context;
+    private List<Expense> recentExpenses = new ArrayList<>();
+
+
     public ExpenseGetFragment() {
         // Required empty public constructor
     }
@@ -30,43 +44,24 @@ private Context context;
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view =inflater.inflate(R.layout.fragment_expense_get, container, false);
-        Button btn1,btn2,btn3,btn4,btn5,btn6;
+        final View view = inflater.inflate(R.layout.fragment_expense_get, container, false);
 
-        btn1 = view.findViewById(R.id.Btn1);
-        btn2 = view.findViewById(R.id.Btn2);
-        btn3 = view.findViewById(R.id.Btn3);
-        btn4 = view.findViewById(R.id.Btn4);
-        btn5 = view.findViewById(R.id.Btn5);
-        btn6 = view.findViewById(R.id.Btn6);
+        ExpenseTypeRepo expenseTypeRepo = new ExpenseTypeRepo();
+        ExpenseRepo expenseRepo = new ExpenseRepo();
+        List<Expense_Type> ExpTypes = expenseTypeRepo.getExpenseTypeList();
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getLayoutInflater();
-                builder.setView(inflater.inflate(R.layout.expense_dialog, null));
-                builder.setMessage("Enter Expense").setTitle("Enter Expense here");
 
-                builder.setPositiveButton("Enter", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
+        RecentExpenseAdapter recentExpenseAdapter = new RecentExpenseAdapter(recentExpenses, ExpTypes, context);
+        recyclerView = view.findViewById(R.id.recyler_all_expense);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(recentExpenseAdapter);
 
-                    }
-                });
-                builder.setNegativeButton("Exit", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        // User cancelled the dialog
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
 
-            }
-        });
+        recentExpenses = expenseRepo.getExpenseList();
+        recentExpenseAdapter.setList(recentExpenses,ExpTypes);
+
 
         return view;
     }

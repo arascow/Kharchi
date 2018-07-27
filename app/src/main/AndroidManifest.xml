@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PickExpenseCategoryActivity"></activity>
+        <activity android:name=".PickExpenseCategoryActivity" />
+        <activity android:name=".PickIncomeCategoryActivity"></activity>
     </application>
 
 </manifest>

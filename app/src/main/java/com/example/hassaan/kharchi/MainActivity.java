@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,21 +32,34 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hassaan.kharchi.Adapters.RecentExpenseAdapter;
+import com.example.hassaan.kharchi.Adapters.RecentIncomeAdapter;
 import com.example.hassaan.kharchi.Data.Repo.ExpenseRepo;
 import com.example.hassaan.kharchi.Data.Repo.ExpenseTypeRepo;
 import com.example.hassaan.kharchi.Data.Repo.IncomeRepo;
 import com.example.hassaan.kharchi.Data.Repo.IncomeTypeRepo;
 import com.example.hassaan.kharchi.Fragment.ExpenseGetFragment;
+import com.example.hassaan.kharchi.Fragment.IncomeGetFragment;
 import com.example.hassaan.kharchi.Models.Expense;
 import com.example.hassaan.kharchi.Models.Expense_Type;
 import com.example.hassaan.kharchi.Models.Income;
 import com.example.hassaan.kharchi.Models.Income_Type;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private RecyclerView recyclerView;
+    private RecyclerView recyclerView2;
+    private List<Expense> recentExpenses = new ArrayList<>();
+    private List<Income> recentIncome = new ArrayList<>();
+    private List<Expense_Type> ExpTypes = new ArrayList<>();
+    private List<Income_Type> IncTypes = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +75,6 @@ public class MainActivity extends AppCompatActivity
         TextView Income, Expense;
         int Getincome, GetExpense;
 
-//        Button addButton = (Button) findViewById(R.id.BtnAdd);
-//        Button subButton = (Button) findViewById(R.id.BtnSub);
 
         Income = findViewById(R.id.Income);
         Expense = findViewById(R.id.Expense);
@@ -69,7 +83,9 @@ public class MainActivity extends AppCompatActivity
 
 
         ExpenseRepo expenseRepo = new ExpenseRepo();
+        ExpenseTypeRepo expenseTypeRepo = new ExpenseTypeRepo();
         IncomeRepo incomeRepo = new IncomeRepo();
+        IncomeTypeRepo incomeTypeRepo = new IncomeTypeRepo();
 
         Getincome = incomeRepo.getIncomeSum();
         GetExpense = expenseRepo.getExpenseSum();
@@ -78,8 +94,7 @@ public class MainActivity extends AppCompatActivity
         Expense.setText(GetExpense + "");
 
         pb.setMax(Getincome);
-        pb.setProgress(Getincome-GetExpense);
-
+        pb.setProgress(Getincome - GetExpense);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -93,54 +108,67 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
 
 
-//                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                LayoutInflater inflater = MainActivity.this.getLayoutInflater();
-//                builder.setView(inflater.inflate(R.layout.expense_dialog, null));
-//                final EditText editText = (EditText) new EditText(MainActivity.this);
-//                builder.setMessage("Enter Expense").setTitle("Enter Expense here");
-//                builder.setView(editText);
-//                builder.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//
-//                        Expense expense = new Expense();
-//                        ExpenseRepo ExRepo = new ExpenseRepo();
-//
-//                        if (editText.getText().equals("")) {
-//                            Toast.makeText(MainActivity.this, "You Must Enter Amount", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            String amount = editText.getText().toString();
-//                            expense.setAmount(amount);
-//                            expense.setDate("22");
-//                            expense.setExpenseType("2");
-//                            ExRepo.insertInExpense(expense);
-//                            Intent i = new Intent(MainActivity.this, MainActivity.class);
-//                            startActivity(i);
-//                        }
-//                        List<Expense> Expenselist = ExRepo.getExpenseList();
-//                        Log.d("TAG", "=============================================================");
-//                        for (int i = 0; i < Expenselist.size(); i++) {
-//                            Log.d("TAG", Expenselist.get(i).getExpenseID() +
-//                                    Expenselist.get(i).getAmount()+
-//                                    Expenselist.get(i).getDate()+
-//                                    Expenselist.get(i).getExpenseType()
-//                            );
-//
-//
-//                        }
-//                    }
-//                });
-//                builder.setNegativeButton("Exit", new DialogInterface.OnClickListener()
-//
-//                {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // User cancelled the dialog
-//                    }
-//                });
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-
             }
         });
+
+        FloatingActionButton fab2 = findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), PickIncomeCategoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ExpTypes = expenseTypeRepo.getExpenseTypeList();
+        IncTypes = incomeTypeRepo.getIncomeTypeList();
+
+        RecentExpenseAdapter recentExpenseAdapter = new RecentExpenseAdapter(recentExpenses, ExpTypes, getApplicationContext());
+        RecentIncomeAdapter recentIncomeAdapter = new RecentIncomeAdapter(recentIncome, IncTypes, getApplicationContext());
+        recyclerView = findViewById(R.id.recylerRecentExp);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(recentExpenseAdapter);
+
+
+        recentExpenses = expenseRepo.getExpenseList();
+        recentIncome = incomeRepo.getIncomeList();
+
+        if (recentExpenses.size() < 10) {
+            recentExpenseAdapter.setList(recentExpenses, ExpTypes);
+        } else {
+            List<Expense> filtered = new ArrayList<>();
+            Collections.reverse(recentExpenses);
+
+            for (int i = 0; i < 10; i++) {
+                filtered.add(recentExpenses.get(i));
+            }
+            Collections.reverse(filtered);
+            recentExpenseAdapter.setList(filtered, ExpTypes);
+        }
+
+        recyclerView2 = findViewById(R.id.recylerRecentIncome);
+        recyclerView2.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManagerinc = new LinearLayoutManager(getApplicationContext());
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView2.setAdapter(recentIncomeAdapter);
+
+        if (recentIncome.size() < 10) {
+            recentIncomeAdapter.setList(recentIncome, IncTypes);
+        } else {
+            List<Income> filtered = new ArrayList<>();
+            Collections.reverse(recentIncome);
+
+            for (int i = 0; i < 10; i++) {
+                filtered.add(recentIncome.get(i));
+            }
+            Collections.reverse(filtered);
+            recentIncomeAdapter.setList(filtered, IncTypes);
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -158,7 +186,9 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+           // super.onBackPressed();
         }
     }
 
@@ -191,8 +221,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            ExpenseGetFragment expenseGetFragment = new ExpenseGetFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, expenseGetFragment);
+            fragmentTransaction.commit();
         } else if (id == R.id.nav_gallery) {
+            IncomeGetFragment incomeGetFragment = new IncomeGetFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, incomeGetFragment);
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -227,7 +264,7 @@ public class MainActivity extends AppCompatActivity
         Expense_Type expense_type = new Expense_Type();
 
         expense_type.setExpenseName("SHOPPING");
-        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.shoping);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.shoping);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.PNG, 70, baos);
         final byte[] b = baos.toByteArray();
@@ -236,16 +273,16 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("ENTERTAINMENT");
-        Bitmap bm1 = BitmapFactory.decodeResource(getResources(),R.drawable.entertainment);
+        Bitmap bm1 = BitmapFactory.decodeResource(getResources(), R.drawable.entertainment);
         ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
         bm1.compress(Bitmap.CompressFormat.PNG, 70, baos1);
         final byte[] b1 = baos1.toByteArray();
-       // String encodedImage1 = Base64.encodeToString(b1, Base64.CRLF);
+        // String encodedImage1 = Base64.encodeToString(b1, Base64.CRLF);
         expense_type.setExpenseImg(b1);
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("VACATION");
-        Bitmap bm2 = BitmapFactory.decodeResource(getResources(),R.drawable.vacation);
+        Bitmap bm2 = BitmapFactory.decodeResource(getResources(), R.drawable.vacation);
         ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
         bm2.compress(Bitmap.CompressFormat.PNG, 70, baos2);
         final byte[] b2 = baos2.toByteArray();
@@ -254,7 +291,7 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("FOOD");
-        Bitmap bm3 = BitmapFactory.decodeResource(getResources(),R.drawable.foodd);
+        Bitmap bm3 = BitmapFactory.decodeResource(getResources(), R.drawable.foodd);
         ByteArrayOutputStream baos3 = new ByteArrayOutputStream();
         bm3.compress(Bitmap.CompressFormat.PNG, 70, baos3);
         final byte[] b3 = baos3.toByteArray();
@@ -263,7 +300,7 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("DRINKS");
-        Bitmap bm4 = BitmapFactory.decodeResource(getResources(),R.drawable.drinks);
+        Bitmap bm4 = BitmapFactory.decodeResource(getResources(), R.drawable.drinks);
         ByteArrayOutputStream baos4 = new ByteArrayOutputStream();
         bm4.compress(Bitmap.CompressFormat.PNG, 70, baos4);
         final byte[] b4 = baos4.toByteArray();
@@ -272,7 +309,7 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("PUBLIC TRANSPORT");
-        Bitmap bm5 = BitmapFactory.decodeResource(getResources(),R.drawable.public_transport);
+        Bitmap bm5 = BitmapFactory.decodeResource(getResources(), R.drawable.public_transport);
         ByteArrayOutputStream baos5 = new ByteArrayOutputStream();
         bm5.compress(Bitmap.CompressFormat.PNG, 70, baos5);
         final byte[] b5 = baos5.toByteArray();
@@ -281,7 +318,7 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("FUEL");
-        Bitmap bm6 = BitmapFactory.decodeResource(getResources(),R.drawable.gas);
+        Bitmap bm6 = BitmapFactory.decodeResource(getResources(), R.drawable.gas);
         ByteArrayOutputStream baos6 = new ByteArrayOutputStream();
         bm6.compress(Bitmap.CompressFormat.PNG, 70, baos6);
         final byte[] b6 = baos6.toByteArray();
@@ -290,7 +327,7 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("BILLS");
-        Bitmap bm7 = BitmapFactory.decodeResource(getResources(),R.drawable.bills);
+        Bitmap bm7 = BitmapFactory.decodeResource(getResources(), R.drawable.bills);
         ByteArrayOutputStream baos7 = new ByteArrayOutputStream();
         bm7.compress(Bitmap.CompressFormat.PNG, 70, baos7);
         final byte[] b7 = baos7.toByteArray();
@@ -299,7 +336,7 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("SPORTS");
-        Bitmap bm8 = BitmapFactory.decodeResource(getResources(),R.drawable.sports);
+        Bitmap bm8 = BitmapFactory.decodeResource(getResources(), R.drawable.sports);
         ByteArrayOutputStream baos8 = new ByteArrayOutputStream();
         bm8.compress(Bitmap.CompressFormat.PNG, 70, baos8);
         final byte[] b8 = baos8.toByteArray();
@@ -308,7 +345,7 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("HEALTH");
-        Bitmap bm9 = BitmapFactory.decodeResource(getResources(),R.drawable.health);
+        Bitmap bm9 = BitmapFactory.decodeResource(getResources(), R.drawable.health);
         ByteArrayOutputStream baos9 = new ByteArrayOutputStream();
         bm9.compress(Bitmap.CompressFormat.PNG, 70, baos9);
         final byte[] b9 = baos9.toByteArray();
@@ -317,7 +354,7 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("BARBER");
-        Bitmap bm10 = BitmapFactory.decodeResource(getResources(),R.drawable.barber);
+        Bitmap bm10 = BitmapFactory.decodeResource(getResources(), R.drawable.barber);
         ByteArrayOutputStream baos10 = new ByteArrayOutputStream();
         bm10.compress(Bitmap.CompressFormat.PNG, 70, baos10);
         final byte[] b10 = baos10.toByteArray();
@@ -326,34 +363,34 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("PHONE");
-        Bitmap bm11 = BitmapFactory.decodeResource(getResources(),R.drawable.phone);
+        Bitmap bm11 = BitmapFactory.decodeResource(getResources(), R.drawable.phone);
         ByteArrayOutputStream baos11 = new ByteArrayOutputStream();
         bm11.compress(Bitmap.CompressFormat.PNG, 70, baos11);
-        final byte[] b11 = baos.toByteArray();
+        final byte[] b11 = baos11.toByteArray();
 //        String encodedImage11 = Base64.encodeToString(b11, Base64.CRLF);
         expense_type.setExpenseImg(b11);
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("MOVIES");
-        Bitmap bm12 = BitmapFactory.decodeResource(getResources(),R.drawable.movies);
+        Bitmap bm12 = BitmapFactory.decodeResource(getResources(), R.drawable.movies);
         ByteArrayOutputStream baos12 = new ByteArrayOutputStream();
         bm12.compress(Bitmap.CompressFormat.PNG, 70, baos12);
-        final byte[] b12 = baos.toByteArray();
+        final byte[] b12 = baos12.toByteArray();
 //        String encodedImage12 = Base64.encodeToString(b12, Base64.CRLF);
         expense_type.setExpenseImg(b12);
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("GIFTS");
-        Bitmap bm13 = BitmapFactory.decodeResource(getResources(),R.drawable.gift);
+        Bitmap bm13 = BitmapFactory.decodeResource(getResources(), R.drawable.gift);
         ByteArrayOutputStream baos13 = new ByteArrayOutputStream();
         bm13.compress(Bitmap.CompressFormat.PNG, 70, baos13);
-        final byte[] b13 = baos.toByteArray();
+        final byte[] b13 = baos13.toByteArray();
 //        String encodedImage13 = Base64.encodeToString(b13, Base64.CRLF);
         expense_type.setExpenseImg(b13);
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("CAR");
-        Bitmap bm14 = BitmapFactory.decodeResource(getResources(),R.drawable.car);
+        Bitmap bm14 = BitmapFactory.decodeResource(getResources(), R.drawable.car);
         ByteArrayOutputStream baos14 = new ByteArrayOutputStream();
         bm14.compress(Bitmap.CompressFormat.PNG, 70, baos14);
         final byte[] b14 = baos14.toByteArray();
@@ -362,7 +399,7 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
         expense_type.setExpenseName("OTHER");
-        Bitmap bm15 = BitmapFactory.decodeResource(getResources(),R.drawable.others);
+        Bitmap bm15 = BitmapFactory.decodeResource(getResources(), R.drawable.others);
         ByteArrayOutputStream baos15 = new ByteArrayOutputStream();
         bm15.compress(Bitmap.CompressFormat.PNG, 70, baos15);
         final byte[] b15 = baos15.toByteArray();
@@ -371,25 +408,57 @@ public class MainActivity extends AppCompatActivity
         ExTRepo.insertInExpenseType(expense_type);
 
 
-
         Income_Type income_type = new Income_Type();
 
         income_type.setIncomeName("SALARY");
+        Bitmap bm16 = BitmapFactory.decodeResource(getResources(), R.drawable.salary);
+        ByteArrayOutputStream baos16 = new ByteArrayOutputStream();
+        bm16.compress(Bitmap.CompressFormat.PNG, 70, baos16);
+        final byte[] b16 = baos16.toByteArray();
+//        String encodedImage15 = Base64.encodeToString(b15, Base64.CRLF);
+        income_type.setIncomeImg(b15);
         InTRepo.insertInIncomeType(income_type);
 
-        Income income = new Income();
+        income_type.setIncomeName("PROFIT");
+        Bitmap bm17 = BitmapFactory.decodeResource(getResources(), R.drawable.profits);
+        ByteArrayOutputStream baos17 = new ByteArrayOutputStream();
+        bm17.compress(Bitmap.CompressFormat.PNG, 70, baos17);
+        final byte[] b17 = baos17.toByteArray();
+//        String encodedImage15 = Base64.encodeToString(b15, Base64.CRLF);
+        income_type.setIncomeImg(b17);
+        InTRepo.insertInIncomeType(income_type);
 
-        income.setAmount("50000");
-        income.setIncomeType("1");
-        income.setDate("22");
-        IncRepo.insertInIncome(income);
+        income_type.setIncomeName("INVESTMENT");
+        Bitmap bm18 = BitmapFactory.decodeResource(getResources(), R.drawable.investment);
+        ByteArrayOutputStream baos18 = new ByteArrayOutputStream();
+        bm18.compress(Bitmap.CompressFormat.PNG, 70, baos18);
+        final byte[] b18 = baos18.toByteArray();
+//        String encodedImage15 = Base64.encodeToString(b15, Base64.CRLF);
+        income_type.setIncomeImg(b18);
+        InTRepo.insertInIncomeType(income_type);
 
-        Expense expense = new Expense();
+        income_type.setIncomeName("SAVING");
+        Bitmap bm19 = BitmapFactory.decodeResource(getResources(), R.drawable.saving);
+        ByteArrayOutputStream baos19 = new ByteArrayOutputStream();
+        bm19.compress(Bitmap.CompressFormat.PNG, 70, baos19);
+        final byte[] b19 = baos19.toByteArray();
+//        String encodedImage15 = Base64.encodeToString(b15, Base64.CRLF);
+        income_type.setIncomeImg(b19);
+        InTRepo.insertInIncomeType(income_type);
 
-        expense.setAmount("30000");
-        expense.setDate("22");
-        expense.setExpenseType("2");
-        ExRepo.insertInExpense(expense);
+//        Income income = new Income();
+//
+//        income.setAmount("50000");
+//        income.setIncomeType("1");
+//        income.setDate("22");
+//        IncRepo.insertInIncome(income);
+//
+//        Expense expense = new Expense();
+//
+//        expense.setAmount("30000");
+//        expense.setDate("22");
+//        expense.setExpenseType("2");
+//        ExRepo.insertInExpense(expense);
 
     }
 }
