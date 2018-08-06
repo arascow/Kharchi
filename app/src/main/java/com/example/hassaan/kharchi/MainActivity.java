@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity
         IncomeRepo incomeRepo = new IncomeRepo();
         IncomeTypeRepo incomeTypeRepo = new IncomeTypeRepo();
 
-        Getincome = incomeRepo.getIncomeSum();
-        GetExpense = expenseRepo.getExpenseSum();
+        Getincome = incomeRepo.getIncomeSumbyMonth();
+        GetExpense = expenseRepo.getExpenseSumbyMonth();
 
         Income.setText("" + Getincome);
         Expense.setText(GetExpense + "");
@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 vibe.vibrate(50);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
 
                 Intent intent = new Intent(getApplicationContext(), PickExpenseCategoryActivity.class);
                 startActivity(intent);
