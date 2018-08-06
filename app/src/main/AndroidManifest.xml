@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hassaan.kharchi">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
         android:name=".App.app"
         android:allowBackup="true"
@@ -21,7 +23,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".PickExpenseCategoryActivity" />
-        <activity android:name=".PickIncomeCategoryActivity"></activity>
+        <activity android:name=".PickIncomeCategoryActivity" />
+        <activity
+            android:name=".IncomeTabActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ExpenseTabActivity"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
     </application>
 
 </manifest>
