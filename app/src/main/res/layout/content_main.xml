@@ -1,128 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-7446902067334217/1558871719"></com.google.android.gms.ads.AdView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/incomeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="39dp"
+                        android:background="#FFFFFF"
+                        android:gravity="center_vertical"
+                        android:text="Total Income "
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/Income"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/expenseText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="39dp"
+                        android:layout_marginStart="48dp"
+                        android:background="#FFFFFF"
+                        android:gravity="center_vertical"
+                        android:text="Total Expenses"
+                        android:textColor="#c61919"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/Expense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="48dp"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
+                android:max="100"
+                android:progressDrawable="@drawable/progressbarr"
+                android:scaleY="4" />
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/recentincomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:layout_marginStart="32dp"
+                android:gravity="center_vertical"
+                android:text="Recent Income "
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/recentexpenseText"
+                android:layout_width="wrap_content"
+                android:layout_height="39dp"
+                android:layout_marginStart="80dp"
+                android:gravity="center_vertical"
+                android:text="Recent Expenses"
+                android:textColor="#c61919"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recylerRecentIncome"
+            android:layout_width="178dp"
+            android:layout_height="230dp"></android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recylerRecentExp"
+            android:layout_width="187dp"
+            android:layout_height="230dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-7446902067334217/1558871719"></com.google.android.gms.ads.AdView>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="327dp"
-        android:layout_height="7dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
-        android:max="100"
-        android:progressDrawable="@drawable/progressbarr"
-        android:scaleY="4" />
 
-    <TextView
-        android:id="@+id/incomeText"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_alignTop="@+id/expenseText"
-        android:layout_marginEnd="-111dp"
-        android:layout_toStartOf="@+id/Income"
-
-        android:background="#FFFFFF"
-        android:gravity="center_vertical"
-        android:text="Total Income " />
-
-    <TextView
-        android:id="@+id/expenseText"
-        android:layout_width="wrap_content"
-        android:layout_height="39dp"
-        android:layout_alignTop="@+id/Income"
-        android:layout_marginStart="-111dp"
-        android:layout_toEndOf="@+id/Expense"
-
-        android:background="#FFFFFF"
-        android:gravity="center_vertical"
-        android:text="Total Expenses" />
-
-    <TextView
-        android:id="@+id/Income"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="111dp"
-        android:layout_marginTop="111dp"
-        android:background="#FFFFFF"
-        android:padding="10dp" />
-
-    <TextView
-        android:id="@+id/Expense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/Income"
-        android:layout_marginEnd="111dp"
-        android:background="#FFFFFF"
-        android:padding="10dp" />
-
-
-    <TextView
-        android:id="@+id/recentincomeText"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_above="@+id/recylerRecentExp"
-        android:layout_alignStart="@+id/incomeText"
-        android:gravity="center_vertical"
-        android:text="Recent Income " />
-
-    <TextView
-        android:id="@+id/recentexpenseText"
-        android:layout_width="wrap_content"
-        android:layout_height="39dp"
-        android:layout_above="@+id/recylerRecentExp"
-        android:layout_alignEnd="@+id/expenseText"
-        android:gravity="center_vertical"
-        android:text="Recent Expenses" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recylerRecentExp"
-        android:layout_width="190dp"
-        android:layout_height="231dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="62dp">
-
-    </android.support.v7.widget.RecyclerView>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recylerRecentIncome"
-        android:layout_width="190dp"
-        android:layout_height="231dp"
-        android:layout_alignBottom="@+id/recylerRecentExp"
-        android:layout_alignParentStart="true">
-
-    </android.support.v7.widget.RecyclerView>
-
-
-</RelativeLayout>
+</LinearLayout>
