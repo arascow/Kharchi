@@ -86,7 +86,7 @@ public class IncomeTypeAdapter extends RecyclerView.Adapter<IncomeTypeAdapter.Vi
                 SimpleDateFormat Formatout = new SimpleDateFormat("EEE, dd/MM/yyyy");
                 final String incomeDateinDB = Formatout.format(incomeDate);
 
-                Toast.makeText(context, "IncomeType " + income_types.get(position).getIncomeTypeId(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "IncomeType " + income_types.get(position).getIncomeTypeId(), Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 View view = LayoutInflater.from(context).inflate(R.layout.expense_dialog, null);
                 builder.setView(view);

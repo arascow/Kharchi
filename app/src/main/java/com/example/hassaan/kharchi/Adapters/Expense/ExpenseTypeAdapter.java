@@ -87,7 +87,7 @@ public class ExpenseTypeAdapter extends RecyclerView.Adapter<ExpenseTypeAdapter.
                 final String expenseDateinDB = Formatout.format(expenseDate);
 
 
-                Toast.makeText(context, "ExpenseType "+expense_type.get(position).getExpenseTypeId(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(context, "ExpenseType "+expense_type.get(position).getExpenseTypeId(), Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 View view = LayoutInflater.from(context).inflate(R.layout.expense_dialog, null);
                 builder.setView(view);
