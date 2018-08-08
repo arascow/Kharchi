@@ -169,23 +169,23 @@ public class MainActivity extends AppCompatActivity
         recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView2.setAdapter(recentIncomeAdapter);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                Toast.makeText(MainActivity.this, "on Move", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
-                //Remove swiped item from list and notify the RecyclerView
-                final int position = viewHolder.getAdapterPosition();
-                recentIncomeAdapter.removeFromList(position);
-                Toast.makeText(MainActivity.this, "on Swiped " + position, Toast.LENGTH_SHORT).show();
-            }
-        });
-        itemTouchHelper.attachToRecyclerView(recyclerView2);
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//            @Override
+//            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+//                Toast.makeText(MainActivity.this, "on Move", Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+//
+//                //Remove swiped item from list and notify the RecyclerView
+//                final int position = viewHolder.getAdapterPosition();
+//                recentIncomeAdapter.removeFromList(position);
+//                Toast.makeText(MainActivity.this, "on Swiped " + position, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        itemTouchHelper.attachToRecyclerView(recyclerView2);
 
 
         if (recentIncome.size() < 10) {
@@ -218,9 +218,8 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            // super.onBackPressed();
+            startActivity(new Intent(MainActivity.this,MainActivity.class));
+             super.onBackPressed();
         }
     }
 

@@ -26,8 +26,10 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".PickExpenseCategoryActivity" />
-        <activity android:name=".PickIncomeCategoryActivity" />
+        <activity android:name=".PickExpenseCategoryActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".PickIncomeCategoryActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".IncomeTabActivity"
             android:theme="@style/AppTheme.NoActionBar" />
