@@ -23,22 +23,62 @@
 
     <include layout="@layout/content_main" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        android:layout_gravity="bottom|end">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:scaleType="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="1.4"
+            android:scaleY="1.4"
+
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Add\nExpense"
+            android:textAlignment="center"
+            android:elevation="16dp"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        android:layout_gravity="bottom|start">
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab2"
+            android:scaleType="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="1.4"
+            android:scaleY="1.4"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="@dimen/fab_margin"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Add\nIncome"
+            android:elevation="16dp"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </FrameLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>
