@@ -58,7 +58,7 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab2"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleX="1.4"

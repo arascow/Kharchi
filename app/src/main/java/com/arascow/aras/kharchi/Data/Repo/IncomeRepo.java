@@ -133,6 +133,12 @@ public class IncomeRepo {
                 e.printStackTrace();
             }
             do {
+                try {
+                    date = Format.parse(cursor.getString(cursor.getColumnIndex(Income.KEY_Date)));
+                    month = Formatout.format(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 if (month.equals(currentMonth)) {
                     GetIncome = new Income();
                     GetIncome.setIncomeId(cursor.getString(cursor.getColumnIndex(Income.KEY_IncomeID)));
@@ -141,6 +147,29 @@ public class IncomeRepo {
                     GetIncome.setDate(cursor.getString(cursor.getColumnIndex(Income.KEY_Date)));
 
                     SUMINCOME += Integer.parseInt(GetIncome.Amount);
+                    try {
+                        date = Format.parse(cursor.getString(cursor.getColumnIndex(Income.KEY_Date)));
+                        month = Formatout.format(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        date = Format.parse(cursor.getString(cursor.getColumnIndex(Income.KEY_Date)));
+                        month = Formatout.format(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (month.equals(currentMonth)) {
+                        GetIncome = new Income();
+                        GetIncome.setIncomeId(cursor.getString(cursor.getColumnIndex(Income.KEY_IncomeID)));
+                        GetIncome.setAmount(cursor.getString(cursor.getColumnIndex(Income.KEY_Amount)));
+                        GetIncome.setIncomeType(cursor.getString(cursor.getColumnIndex(Income.KEY_IncomeType)));
+                        GetIncome.setDate(cursor.getString(cursor.getColumnIndex(Income.KEY_Date)));
+
+                        SUMINCOME += Integer.parseInt(GetIncome.Amount);
+                    }
+
                 }
             } while (cursor.moveToNext());
         }
@@ -215,6 +244,7 @@ public class IncomeRepo {
                 e.printStackTrace();
             }
             do {
+                DBDate = cursor.getString(cursor.getColumnIndex(Income.KEY_Date));
                 GetIncome = new Income();
                 if (DBDate.contains(month)) {
                     Sum_of_one_month = Sum_of_one_month + Integer.parseInt(cursor.getString(cursor.getColumnIndex(Income.KEY_Amount)));

@@ -14,6 +14,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -134,14 +136,22 @@ public class ExpenseRepo {
                 date = Format.parse(DBDate);
                 month = Formatout.format(date);
                 currentmonth = Formatout.format(currentTime);
-                Log.i(TAG, "getExpenseSumbyMonth: "+currentmonth);
 
-                Log.i(TAG, "getExpenseSumbyMonth: "+currentTime);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            Log.i(TAG, "getExpenseSumbyMonth: " + currentmonth);
 
+            Log.i(TAG, "getExpenseSumbyMonth: " + month);
             do {
+                try {
+                    date = Format.parse(cursor.getString(cursor.getColumnIndex(Expense.KEY_Date)));
+                    month = Formatout.format(date);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 if (month.equals(currentmonth)) {
                     GetExpenses = new Expense();
                     GetExpenses.setExpenseID(cursor.getString(cursor.getColumnIndex(Expense.KEY_ExpenseID)));
@@ -151,6 +161,31 @@ public class ExpenseRepo {
 
                     SUMEXPENSE += Integer.parseInt(GetExpenses.Amount);
                     ExpenseLists.add(GetExpenses);
+                    try {
+                        date = Format.parse(cursor.getString(cursor.getColumnIndex(Expense.KEY_Date)));
+                        month = Formatout.format(date);
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        date = Format.parse(cursor.getString(cursor.getColumnIndex(Expense.KEY_Date)));
+                        month = Formatout.format(date);
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (month.equals(currentmonth)) {
+                        GetExpenses = new Expense();
+                        GetExpenses.setExpenseID(cursor.getString(cursor.getColumnIndex(Expense.KEY_ExpenseID)));
+                        GetExpenses.setAmount(cursor.getString(cursor.getColumnIndex(Expense.KEY_Amount)));
+                        GetExpenses.setExpenseType(cursor.getString(cursor.getColumnIndex(Expense.KEY_ExpenseType)));
+                        GetExpenses.setDate(cursor.getString(cursor.getColumnIndex(Expense.KEY_Date)));
+
+                        SUMEXPENSE += Integer.parseInt(GetExpenses.Amount);
+                        ExpenseLists.add(GetExpenses);
+                    }
                 }
 
             } while (cursor.moveToNext());
@@ -221,6 +256,7 @@ public class ExpenseRepo {
                 e.printStackTrace();
             }
             do {
+                DBDate = cursor.getString(cursor.getColumnIndex(Expense.KEY_Date));
                 GetExpenses = new Expense();
                 if (DBDate.contains(month)) {
                     Sum_of_one_month = Sum_of_one_month + Integer.parseInt(cursor.getString(cursor.getColumnIndex(Income.KEY_Amount)));
@@ -238,7 +274,7 @@ public class ExpenseRepo {
                         ExpenseLists.add(GetExpenses);
                     }
 
-                } else if(!DBDate.contains(month)) {
+                } else if (!DBDate.contains(month)) {
 
                     GetExpenses.setAmount(String.valueOf(Sum_of_one_month));
                     cursor.moveToPrevious();
@@ -252,7 +288,7 @@ public class ExpenseRepo {
                         e.printStackTrace();
                     }
                     ExpenseLists.add(GetExpenses);
-                    Sum_of_one_month=0;
+                    Sum_of_one_month = 0;
                     Sum_of_one_month = Sum_of_one_month + Integer.parseInt(cursor.getString(cursor.getColumnIndex(Income.KEY_Amount)));
                     if (cursor.isLast()) {
                         GetExpenses = new Expense();
@@ -322,7 +358,7 @@ public class ExpenseRepo {
                         ExpenseLists.add(GetExpenses);
                     }
 
-                } else if(!DBDate.contains(month)) {
+                } else if (!DBDate.contains(month)) {
 
                     GetExpenses.setAmount(String.valueOf(Sum_of_one_day));
                     cursor.moveToPrevious();
@@ -335,7 +371,7 @@ public class ExpenseRepo {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    Sum_of_one_day =0;
+                    Sum_of_one_day = 0;
                     Sum_of_one_day = Sum_of_one_day + Integer.parseInt(cursor.getString(cursor.getColumnIndex(Income.KEY_Amount)));
 
                     if (cursor.isLast()) {

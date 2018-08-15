@@ -73,7 +73,7 @@ public class RecentExpenseAdapter extends RecyclerView.Adapter<RecentExpenseAdap
 
         context = holder.imageView.getContext();
 
-        holder.ExpName.setText("Rs: "+recentExpenses.get(position).getAmount());
+        holder.ExpName.setText("Rs: " + recentExpenses.get(position).getAmount());
         holder.ExpDate.setText(recentExpenses.get(position).getDate());
 
 
@@ -108,6 +108,12 @@ public class RecentExpenseAdapter extends RecyclerView.Adapter<RecentExpenseAdap
 
                         if (editText.getText().toString().equals("")) {
                             Toast.makeText(context, "You Must Enter Amount", Toast.LENGTH_SHORT).show();
+                        } else if (editText.getText().toString().equals("0")) {
+                            Toast.makeText(context, "You Must Enter Amount greater than zero", Toast.LENGTH_SHORT).show();
+
+                        } else if (editText.getText().toString().length() >= 11) {
+                            Toast.makeText(context, "Amount cannot be that big", Toast.LENGTH_SHORT).show();
+
                         } else {
                             String amount = editText.getText().toString();
                             expense.setExpenseID(recentExpenses.get(position).getExpenseID());
@@ -118,8 +124,8 @@ public class RecentExpenseAdapter extends RecyclerView.Adapter<RecentExpenseAdap
                             Intent i = new Intent(context.getApplicationContext(), MainActivity.class);
                             context.startActivity(i);
 
-                            ((Activity)context).finish();
-                            Toast.makeText(context, "Edited "+amount + "|||date "+expense.getDate()+"||||Type "+expense.getExpenseType(), Toast.LENGTH_SHORT).show();
+                            ((Activity) context).finish();
+                        //    Toast.makeText(context, "Edited " + amount + "|||date " + expense.getDate() + "||||Type " + expense.getExpenseType(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

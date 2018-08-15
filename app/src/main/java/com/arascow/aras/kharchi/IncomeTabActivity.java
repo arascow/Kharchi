@@ -67,7 +67,7 @@ public class IncomeTabActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_new);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_income);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

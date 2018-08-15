@@ -111,6 +111,12 @@ public class RecentIncomeAdapter extends RecyclerView.Adapter<RecentIncomeAdapte
                         IncomeRepo incomeRepo = new IncomeRepo();
                         if (editText.getText().toString().equals("")) {
                             Toast.makeText(context, "You Must Enter Amount", Toast.LENGTH_SHORT).show();
+                        } else if (editText.getText().toString().equals("0")) {
+                            Toast.makeText(context, "You Must Enter Amount greater than zero", Toast.LENGTH_SHORT).show();
+
+                        } else if (editText.getText().toString().length() >= 11) {
+                            Toast.makeText(context, "Amount cannot be that big", Toast.LENGTH_SHORT).show();
+
                         } else {
                             String amount = editText.getText().toString();
                             income.setIncomeId(recentIncome.get(position).getIncomeId());

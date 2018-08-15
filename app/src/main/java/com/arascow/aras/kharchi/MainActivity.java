@@ -3,20 +3,22 @@ package com.arascow.aras.kharchi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arascow.aras.kharchi.Adapters.Expense.RecentExpenseAdapter;
 import com.arascow.aras.kharchi.Adapters.Income.RecentIncomeAdapter;
@@ -49,6 +51,9 @@ public class MainActivity extends AppCompatActivity
     private List<Income_Type> IncTypes = new ArrayList<>();
 
 
+    boolean doubleBackToExitPressedOnce = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         final ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
         int a = pb.getProgress();
 
-        TextView Income, Expense, incomeTV, expenseTV, recentincome,recentexpense;
+        TextView Income, Expense, incomeTV, expenseTV, recentincome, recentexpense;
         int Getincome, GetExpense;
 
 
@@ -209,10 +214,30 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
         } else {
-            startActivity(new Intent(MainActivity.this,MainActivity.class));
-             super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+//                super.onBackPressed();
+
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    moveTaskToBack(true);
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 1000);
+//            super.onBackPressed();
         }
+// else {
+////            startActivity(new Intent(MainActivity.this,MainActivity.class));
+////             super.onBackPressed();
+//        }
     }
 
 
@@ -227,19 +252,12 @@ public class MainActivity extends AppCompatActivity
 
             Intent intent = new Intent(MainActivity.this, ExpenseTabActivity.class);
             startActivity(intent);
-//            ExpenseGetFragment expenseGetFragment = new ExpenseGetFragment();
-//            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.container, expenseGetFragment);
-//            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_income) {
 
             Intent intent = new Intent(MainActivity.this, IncomeTabActivity.class);
             startActivity(intent);
-//            IncomeGetFragment incomeGetFragment = new IncomeGetFragment();
-//            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.container, incomeGetFragment);
-//            fragmentTransaction.commit();
+
 
         } else if (id == R.id.nav_home) {
 
