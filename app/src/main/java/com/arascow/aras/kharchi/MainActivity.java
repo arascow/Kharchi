@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arascow.aras.kharchi.Adapters.Expense.RecentExpenseAdapter;
 import com.arascow.aras.kharchi.Adapters.Income.RecentIncomeAdapter;
@@ -223,7 +222,7 @@ public class MainActivity extends AppCompatActivity
                 return;
             }
             this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -231,7 +230,7 @@ public class MainActivity extends AppCompatActivity
                     moveTaskToBack(true);
                     doubleBackToExitPressedOnce = false;
                 }
-            }, 1000);
+            }, 100);
 //            super.onBackPressed();
         }
 // else {
@@ -256,6 +255,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_income) {
 
             Intent intent = new Intent(MainActivity.this, IncomeTabActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.aboutus) {
+
+            Intent intent = new Intent(MainActivity.this, AboutUs.class);
             startActivity(intent);
 
 

@@ -5,36 +5,39 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name="com.arascow.aras.kharchi.App.app"
+        android:name=".App.app"
         android:allowBackup="true"
         android:icon="@drawable/khrachi_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/khrachi_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen"
-            android:theme="@style/AppTheme.NoActionBar" >
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name="com.arascow.aras.kharchi.PickExpenseCategoryActivity"
-            android:parentActivityName="com.arascow.aras.kharchi.MainActivity"/>
-        <activity android:name="com.arascow.aras.kharchi.PickIncomeCategoryActivity"
-            android:parentActivityName="com.arascow.aras.kharchi.MainActivity" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name="com.arascow.aras.kharchi.IncomeTabActivity"
+            android:name=".PickExpenseCategoryActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".PickIncomeCategoryActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".IncomeTabActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.arascow.aras.kharchi.ExpenseTabActivity"
+            android:name=".ExpenseTabActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity android:name=".AboutUs"></activity>
     </application>
 
 </manifest>

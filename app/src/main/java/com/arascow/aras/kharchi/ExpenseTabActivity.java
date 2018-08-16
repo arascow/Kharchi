@@ -104,6 +104,10 @@ public class ExpenseTabActivity extends AppCompatActivity implements NavigationV
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //            fragmentTransaction.replace(R.id.container, incomeGetFragment);
 //            fragmentTransaction.commit();
+        } else if (id == R.id.aboutus) {
+
+            Intent intent = new Intent(ExpenseTabActivity.this, AboutUs.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_home) {
 
